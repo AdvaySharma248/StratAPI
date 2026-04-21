@@ -1,0 +1,89 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { formatDistanceToNow } from "date-fns";
+import { Badge } from "@/components/ui/badge";
+import { recentActivity } from "@/lib/mock-data";
+import { cn } from "@/lib/utils";
+
+export function ActivityTable() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.3, duration: 0.4 }}
+      className="rounded-2xl border border-border bg-card"
+    >
+      <div className="p-6 pb-4">
+        <h3 className="text-base font-semibold">Recent API Activity</h3>
+        <p className="text-sm text-muted-foreground mt-0.5">Latest API requests across all services</p>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr className="border-t border-border">
+              {["API Name", "Endpoint", "Status", "Latency", "Timestamp"].map((h) => (
+                <th
+                  key={h}
+                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground"
+                >
+                  {h}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {recentActivity.map((item, idx) => (
+              <motion.tr
+                key={item.id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.05 * idx + 0.3, duration: 0.3 }}
+                className="group border-t border-border/50 transition-colors hover:bg-muted/30"
+              >
+                <td className="px-6 py-3.5">
+                  <span className="text-sm font-medium">{item.apiName}</span>
+                </td>
+                <td className="px-6 py-3.5">
+                  <code className="rounded-lg bg-muted px-2 py-0.5 text-xs font-mono text-muted-foreground">
+                    {item.endpoint}
+                  </code>
+                </td>
+                <td className="px-6 py-3.5">
+                  <Badge
+                    variant="secondary"
+                    className={cn(
+                      "rounded-full px-2.5 py-0.5 text-xs font-medium border-0",
+                      item.status === "success"
+                        ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                        : "bg-red-500/10 text-red-600 dark:text-red-400"
+                    )}
+                  >
+                    {item.status === "success" ? "Success" : "Error"}
+                  </Badge>
+                </td>
+                <td className="px-6 py-3.5">
+                  <span className={cn(
+                    "text-sm font-mono",
+                    item.latency > 1000
+                      ? "text-red-500"
+                      : item.latency > 500
+                        ? "text-amber-500"
+                        : "text-foreground"
+                  )}>
+                    {item.latency}ms
+                  </span>
+                </td>
+                <td className="px-6 py-3.5">
+                  <span className="text-sm text-muted-foreground">
+                    {formatDistanceToNow(new Date(item.timestamp), { addSuffix: true })}
+                  </span>
+                </td>
+              </motion.tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </motion.div>
+  );
+}
