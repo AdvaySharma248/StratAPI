@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   LayoutDashboard,
   Globe,
@@ -16,6 +15,7 @@ import { useAppStore, type PageId } from "@/lib/store";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useEffect, useState } from "react";
 
 const navItems: { id: PageId; label: string; icon: React.ReactNode }[] = [
   { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard size={20} /> },
@@ -27,29 +27,44 @@ const navItems: { id: PageId; label: string; icon: React.ReactNode }[] = [
 ];
 
 export function Sidebar() {
-  const { currentPage, sidebarCollapsed, setCurrentPage, toggleSidebar, setSidebarCollapsed } = useAppStore();
+  const { currentPage, sidebarCollapsed, setCurrentPage, toggleSidebar } = useAppStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   return (
-    <motion.aside
-      initial={false}
-      animate={{ width: sidebarCollapsed ? 72 : 260 }}
-      transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-      className="fixed left-0 top-0 z-40 flex h-screen flex-col border-r border-sidebar-border bg-sidebar"
+    <aside
+      className={cn(
+        "fixed left-0 top-0 z-40 flex h-screen flex-col border-r border-sidebar-border bg-sidebar",
+        "transition-[width] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
+        // Desktop: always show. Mobile: hidden by default, shown via drawer pattern
+        sidebarCollapsed ? "w-[72px]" : "w-[260px]",
+        // On mobile, hide sidebar entirely
+        "max-lg:-translate-x-full max-lg:w-[260px]",
+        // When mounted + not collapsed on desktop, or when we want to show mobile drawer
+        mounted && !sidebarCollapsed && "max-lg:translate-x-0"
+      )}
     >
+      {/* Mobile overlay */}
+      {mounted && !sidebarCollapsed && (
+        <div
+          className="fixed inset-0 z-[-1] bg-black/50 lg:hidden"
+          onClick={toggleSidebar}
+        />
+      )}
+
       {/* Logo */}
-      <div className="flex h-16 items-center gap-3 px-4">
+      <div className="flex h-16 items-center gap-3 px-4 overflow-hidden">
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl gradient-primary">
           <Zap size={20} className="text-white" />
         </div>
         {!sidebarCollapsed && (
-          <motion.span
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -8 }}
-            className="text-lg font-semibold tracking-tight"
-          >
+          <span className="text-lg font-semibold tracking-tight whitespace-nowrap">
             MeterFlow
-          </motion.span>
+          </span>
         )}
       </div>
 
@@ -58,12 +73,11 @@ export function Sidebar() {
         {navItems.map((item) => {
           const isActive = currentPage === item.id;
           const button = (
-            <motion.button
+            <button
               key={item.id}
               onClick={() => setCurrentPage(item.id)}
-              whileTap={{ scale: 0.97 }}
               className={cn(
-                "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                "relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
                 isActive
                   ? "text-primary-foreground"
                   : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
@@ -71,17 +85,13 @@ export function Sidebar() {
               )}
             >
               {isActive && (
-                <motion.div
-                  layoutId="sidebar-active"
-                  className="absolute inset-0 rounded-xl gradient-primary"
-                  transition={{ type: "spring", bounce: 0.15, duration: 0.4 }}
-                />
+                <div className="absolute inset-0 rounded-xl gradient-primary" />
               )}
               <span className="relative z-10 flex items-center gap-3">
                 {item.icon}
-                {!sidebarCollapsed && <span>{item.label}</span>}
+                {!sidebarCollapsed && <span className="whitespace-nowrap">{item.label}</span>}
               </span>
-            </motion.button>
+            </button>
           );
 
           if (sidebarCollapsed) {
@@ -102,9 +112,8 @@ export function Sidebar() {
 
       {/* Bottom section */}
       <div className="border-t border-sidebar-border p-3">
-        {/* User profile */}
         <div className={cn(
-          "flex items-center gap-3 rounded-xl px-2 py-2",
+          "flex items-center gap-3 rounded-xl px-2 py-2 overflow-hidden",
           sidebarCollapsed && "justify-center px-0"
         )}>
           <Avatar className="h-8 w-8 shrink-0">
@@ -113,32 +122,21 @@ export function Sidebar() {
             </AvatarFallback>
           </Avatar>
           {!sidebarCollapsed && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex flex-col overflow-hidden"
-            >
+            <div className="flex flex-col overflow-hidden">
               <span className="truncate text-sm font-medium">John Doe</span>
               <span className="truncate text-xs text-sidebar-foreground/60">john@meterflow.io</span>
-            </motion.div>
+            </div>
           )}
         </div>
 
-        {/* Collapse button */}
         <button
-          onClick={() => {
-            if (window.innerWidth < 1024) {
-              setSidebarCollapsed(true);
-            } else {
-              toggleSidebar();
-            }
-          }}
-          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl py-2 text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+          onClick={toggleSidebar}
+          className="mt-2 hidden lg:flex w-full items-center justify-center gap-2 rounded-xl py-2 text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
         >
           {sidebarCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
           {!sidebarCollapsed && <span className="text-xs">Collapse</span>}
         </button>
       </div>
-    </motion.aside>
+    </aside>
   );
 }

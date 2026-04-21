@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import {
   AreaChart,
   Area,
@@ -99,13 +98,7 @@ export function AnalyticsPage() {
       </div>
 
       {/* Requests per minute */}
-      <motion.div
-        key={`rpm-${selectedApi}-${dateRange}`}
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.35 }}
-        className="rounded-2xl border border-border bg-card p-6"
-      >
+      <div className="rounded-2xl border border-border bg-card p-6">
         <div className="mb-4">
           <h3 className="text-base font-semibold">Requests Per Minute</h3>
           <p className="text-sm text-muted-foreground mt-0.5">Real-time request throughput</p>
@@ -125,17 +118,11 @@ export function AnalyticsPage() {
             <Area type="monotone" dataKey="requests" stroke={isDark ? "#22D3EE" : "#06B6D4"} strokeWidth={2} fill="url(#rpmGrad)" dot={false} />
           </AreaChart>
         </ResponsiveContainer>
-      </motion.div>
+      </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Latency */}
-        <motion.div
-          key={`lat-${selectedApi}-${dateRange}`}
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.08 }}
-          className="rounded-2xl border border-border bg-card p-6"
-        >
+        <div className="rounded-2xl border border-border bg-card p-6">
           <div className="mb-4">
             <h3 className="text-base font-semibold">Latency Distribution</h3>
             <p className="text-sm text-muted-foreground mt-0.5">P50, P95, P99 response times (ms)</p>
@@ -172,16 +159,10 @@ export function AnalyticsPage() {
               <Area type="monotone" dataKey="p99" stroke={isDark ? "#F472B6" : "#EC4899"} strokeWidth={2} fill="url(#p99Grad)" dot={false} />
             </AreaChart>
           </ResponsiveContainer>
-        </motion.div>
+        </div>
 
         {/* Error Rate */}
-        <motion.div
-          key={`err-${selectedApi}-${dateRange}`}
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35, delay: 0.16 }}
-          className="rounded-2xl border border-border bg-card p-6"
-        >
+        <div className="rounded-2xl border border-border bg-card p-6">
           <div className="mb-4">
             <h3 className="text-base font-semibold">Error Rate</h3>
             <p className="text-sm text-muted-foreground mt-0.5">Weekly error rate percentage</p>
@@ -201,7 +182,7 @@ export function AnalyticsPage() {
               />
             </BarChart>
           </ResponsiveContainer>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

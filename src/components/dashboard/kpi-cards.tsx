@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Activity, Key, AlertTriangle, DollarSign, TrendingUp, TrendingDown } from "lucide-react";
 import { AnimatedCounter } from "@/components/common/animated-counter";
 import { cn } from "@/lib/utils";
@@ -13,33 +12,14 @@ const iconMap: Record<string, React.ReactNode> = {
   DollarSign: <DollarSign size={22} />,
 };
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] } },
-};
-
 export function KPICards() {
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-      className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
-    >
-      {kpiData.map((kpi) => (
-        <motion.div
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      {kpiData.map((kpi, idx) => (
+        <div
           key={kpi.title}
-          variants={cardVariants}
-          whileHover={{ y: -2, transition: { duration: 0.2 } }}
-          className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 transition-shadow duration-300 hover:shadow-lg"
+          className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+          style={{ animationDelay: `${idx * 80}ms` }}
         >
           {/* Subtle gradient overlay */}
           <div className={cn(
@@ -77,8 +57,8 @@ export function KPICards() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       ))}
-    </motion.div>
+    </div>
   );
 }

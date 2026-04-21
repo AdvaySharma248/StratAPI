@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Check, ArrowUpRight, Download, Zap, Crown, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -19,11 +18,7 @@ export function BillingPage() {
       </div>
 
       {/* Current Plan */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-2xl border-2 border-primary/30 bg-card p-6"
-      >
+      <div className="relative overflow-hidden rounded-2xl border-2 border-primary/30 bg-card p-6">
         <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-primary/5 blur-3xl" />
         <div className="relative">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -50,7 +45,6 @@ export function BillingPage() {
             </Button>
           </div>
 
-          {/* Features */}
           <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
             {billingData.currentPlan.features.map((f) => (
               <div key={f} className="flex items-center gap-2 text-sm">
@@ -60,17 +54,12 @@ export function BillingPage() {
             ))}
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Usage + Plans grid */}
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Usage summary */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="rounded-2xl border border-border bg-card p-6"
-        >
+        <div className="rounded-2xl border border-border bg-card p-6">
           <h3 className="text-base font-semibold">Usage This Month</h3>
           <p className="text-sm text-muted-foreground mt-0.5">API request consumption</p>
 
@@ -98,15 +87,10 @@ export function BillingPage() {
               Based on current usage at ${((billingData.usage.cost / billingData.usage.requests) * 1000).toFixed(2)}/1K requests
             </p>
           </div>
-        </motion.div>
+        </div>
 
         {/* All plans */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="rounded-2xl border border-border bg-card p-6"
-        >
+        <div className="rounded-2xl border border-border bg-card p-6">
           <h3 className="text-base font-semibold">Available Plans</h3>
           <p className="text-sm text-muted-foreground mt-0.5">Choose the plan that fits your needs</p>
 
@@ -153,16 +137,11 @@ export function BillingPage() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Invoices */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="rounded-2xl border border-border bg-card"
-      >
+      <div className="rounded-2xl border border-border bg-card">
         <div className="p-6 pb-4">
           <h3 className="text-base font-semibold">Invoices</h3>
           <p className="text-sm text-muted-foreground mt-0.5">Your billing history</p>
@@ -215,7 +194,7 @@ export function BillingPage() {
             </tbody>
           </table>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

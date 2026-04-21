@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { User, Globe, Shield, Webhook, Save, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -60,11 +59,7 @@ export function SettingsPage() {
         <p className="text-muted-foreground mt-1">Configure your account and API preferences</p>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="rounded-2xl border border-border bg-card"
-      >
+      <div className="rounded-2xl border border-border bg-card">
         <Tabs defaultValue="profile" className="w-full">
           <div className="border-b border-border px-6">
             <TabsList className="h-14 w-full justify-start rounded-none bg-transparent p-0 gap-1">
@@ -186,12 +181,7 @@ export function SettingsPage() {
                 />
               </div>
               {rateLimit.enabled && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="space-y-5"
-                >
+                <div className="space-y-5">
                   <div className="space-y-2">
                     <Label htmlFor="rpm" className="text-sm">Requests Per Minute</Label>
                     <Input
@@ -213,7 +203,7 @@ export function SettingsPage() {
                     />
                     <p className="text-xs text-muted-foreground">Maximum allowed in a short burst</p>
                   </div>
-                </motion.div>
+                </div>
               )}
             </div>
           </TabsContent>
@@ -232,12 +222,7 @@ export function SettingsPage() {
                 />
               </div>
               {webhooks.enabled && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="space-y-5"
-                >
+                <div className="space-y-5">
                   <div className="space-y-2">
                     <Label htmlFor="webhookUrl" className="text-sm">Webhook URL</Label>
                     <Input
@@ -281,7 +266,7 @@ export function SettingsPage() {
                       type="password"
                     />
                   </div>
-                </motion.div>
+                </div>
               )}
             </div>
           </TabsContent>
@@ -307,7 +292,7 @@ export function SettingsPage() {
             )}
           </Button>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

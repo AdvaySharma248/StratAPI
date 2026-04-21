@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Globe, ExternalLink, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -60,14 +59,10 @@ export function APIManagementPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {apiList.map((api, idx) => (
-          <motion.div
+        {apiList.map((api) => (
+          <div
             key={api.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.06, duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-            whileHover={{ y: -3, transition: { duration: 0.2 } }}
-            className="group rounded-2xl border border-border bg-card p-5 transition-shadow duration-300 hover:shadow-lg"
+            className="group rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
           >
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
@@ -117,7 +112,7 @@ export function APIManagementPage() {
                 Configure
               </Button>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </div>

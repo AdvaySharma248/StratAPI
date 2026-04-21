@@ -1,9 +1,8 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { useAppStore } from "@/lib/store";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { CommandPalette } from "@/components/common/command-palette";
-import { useAppStore } from "@/lib/store";
 import { KPICards } from "@/components/dashboard/kpi-cards";
 import { RequestsChart } from "@/components/dashboard/requests-chart";
 import { StatusPieChart } from "@/components/dashboard/status-pie-chart";
@@ -13,12 +12,6 @@ import { APIManagementPage } from "@/components/api-management/api-management-pa
 import { AnalyticsPage } from "@/components/analytics/analytics-page";
 import { BillingPage } from "@/components/billing/billing-page";
 import { SettingsPage } from "@/components/settings/settings-page";
-
-const pageVariants = {
-  initial: { opacity: 0, y: 8 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] } },
-  exit: { opacity: 0, y: -8, transition: { duration: 0.15 } },
-};
 
 function DashboardPage() {
   return (
@@ -56,17 +49,7 @@ export default function Home() {
 
   return (
     <DashboardLayout>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentPage}
-          variants={pageVariants}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-        >
-          <PageComponent />
-        </motion.div>
-      </AnimatePresence>
+      <PageComponent />
       <CommandPalette />
     </DashboardLayout>
   );

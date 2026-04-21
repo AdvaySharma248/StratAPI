@@ -1,41 +1,37 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Sidebar } from "./sidebar";
 import { TopNavbar } from "./top-navbar";
 import { useAppStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
-import { useEffect } from "react";
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const { sidebarCollapsed, setSidebarCollapsed } = useAppStore();
+  const { sidebarCollapsed } = useAppStore();
+  const [mounted, setMounted] = useState(false);
 
-  // Handle responsive sidebar
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 1024) {
-        setSidebarCollapsed(true);
-      }
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [setSidebarCollapsed]);
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
       <Sidebar />
-      <motion.div
-        initial={false}
-        animate={{ marginLeft: sidebarCollapsed ? 72 : 260 }}
-        transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-        className="flex min-h-screen flex-col"
+      <div
+        className={cn(
+          "flex min-h-screen flex-col transition-[margin-left] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
+          // Default: sidebar expanded on desktop, no margin on mobile
+          mounted
+            ? (sidebarCollapsed ? "lg:ml-[72px]" : "lg:ml-[260px]")
+            : "lg:ml-[260px]"
+        )}
       >
         <TopNavbar />
         <main className="flex-1 p-6">
           {children}
         </main>
-      </motion.div>
+      </div>
     </div>
   );
 }

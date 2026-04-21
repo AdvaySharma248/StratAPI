@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { formatDistanceToNow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { recentActivity } from "@/lib/mock-data";
@@ -8,12 +7,7 @@ import { cn } from "@/lib/utils";
 
 export function ActivityTable() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.3, duration: 0.4 }}
-      className="rounded-2xl border border-border bg-card"
-    >
+    <div className="rounded-2xl border border-border bg-card">
       <div className="p-6 pb-4">
         <h3 className="text-base font-semibold">Recent API Activity</h3>
         <p className="text-sm text-muted-foreground mt-0.5">Latest API requests across all services</p>
@@ -33,13 +27,10 @@ export function ActivityTable() {
             </tr>
           </thead>
           <tbody>
-            {recentActivity.map((item, idx) => (
-              <motion.tr
+            {recentActivity.map((item) => (
+              <tr
                 key={item.id}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.05 * idx + 0.3, duration: 0.3 }}
-                className="group border-t border-border/50 transition-colors hover:bg-muted/30"
+                className="border-t border-border/50 transition-colors hover:bg-muted/30"
               >
                 <td className="px-6 py-3.5">
                   <span className="text-sm font-medium">{item.apiName}</span>
@@ -79,11 +70,11 @@ export function ActivityTable() {
                     {formatDistanceToNow(new Date(item.timestamp), { addSuffix: true })}
                   </span>
                 </td>
-              </motion.tr>
+              </tr>
             ))}
           </tbody>
         </table>
       </div>
-    </motion.div>
+    </div>
   );
 }

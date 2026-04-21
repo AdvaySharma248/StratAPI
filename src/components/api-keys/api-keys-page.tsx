@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Copy, Check, Eye, EyeOff, RotateCcw, Trash2, Plus, Key } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -29,10 +28,14 @@ export function APIKeysPage() {
   };
 
   const copyKey = async (key: string, id: number) => {
-    await navigator.clipboard.writeText(key);
-    setCopiedId(id);
-    toast.success("API key copied to clipboard");
-    setTimeout(() => setCopiedId(null), 2000);
+    try {
+      await navigator.clipboard.writeText(key);
+      setCopiedId(id);
+      toast.success("API key copied to clipboard");
+      setTimeout(() => setCopiedId(null), 2000);
+    } catch {
+      toast.error("Failed to copy");
+    }
   };
 
   const toggleReveal = (id: number) => {
@@ -81,11 +84,7 @@ export function APIKeysPage() {
       </div>
 
       {/* Keys table */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="rounded-2xl border border-border bg-card overflow-hidden"
-      >
+      <div className="rounded-2xl border border-border bg-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -101,12 +100,9 @@ export function APIKeysPage() {
               </tr>
             </thead>
             <tbody>
-              {keys.map((item, idx) => (
-                <motion.tr
+              {keys.map((item) => (
+                <tr
                   key={item.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: idx * 0.04 }}
                   className="group border-b border-border/50 last:border-0 transition-colors hover:bg-muted/30"
                 >
                   <td className="px-6 py-4">
@@ -188,54 +184,44 @@ export function APIKeysPage() {
                       <span className="text-xs text-muted-foreground">—</span>
                     )}
                   </td>
-                </motion.tr>
+                </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </motion.div>
+      </div>
 
       {/* Generate Dialog */}
-      <AnimatePresence>
-        {showDialog && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
-              onClick={() => setShowDialog(false)}
-            />
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96, y: -10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: -10 }}
-              className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-border bg-card p-6 shadow-2xl"
-            >
-              <h2 className="text-lg font-semibold">Generate New API Key</h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                A new API key will be created with full access to your APIs.
-                Make sure to save it — you won&apos;t be able to see it again.
-              </p>
-              <div className="mt-6 flex justify-end gap-3">
-                <Button
-                  variant="outline"
-                  className="rounded-xl"
-                  onClick={() => setShowDialog(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={generateKey}
-                  className="gradient-primary text-white rounded-xl"
-                >
-                  Generate Key
-                </Button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      {showDialog && (
+        <>
+          <div
+            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+            onClick={() => setShowDialog(false)}
+          />
+          <div className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-border bg-card p-6 shadow-2xl">
+            <h2 className="text-lg font-semibold">Generate New API Key</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              A new API key will be created with full access to your APIs.
+              Make sure to save it — you won&apos;t be able to see it again.
+            </p>
+            <div className="mt-6 flex justify-end gap-3">
+              <Button
+                variant="outline"
+                className="rounded-xl"
+                onClick={() => setShowDialog(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={generateKey}
+                className="gradient-primary text-white rounded-xl"
+              >
+                Generate Key
+              </Button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

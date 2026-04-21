@@ -2,7 +2,7 @@
 
 import { useEffect, useCallback } from "react";
 import { useTheme } from "next-themes";
-import { Search, Bell, Moon, Sun, Command } from "lucide-react";
+import { Search, Bell, Moon, Sun, Command, Menu } from "lucide-react";
 import { useAppStore } from "@/lib/store";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,7 @@ import {
 
 export function TopNavbar() {
   const { theme, setTheme } = useTheme();
-  const { setCommandOpen } = useAppStore();
+  const { setCommandOpen, toggleSidebar, sidebarCollapsed } = useAppStore();
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -35,12 +35,17 @@ export function TopNavbar() {
   }, [handleKeyDown]);
 
   return (
-    <header
-      className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-background/80 px-6 backdrop-blur-xl"
-      style={{ marginLeft: 0 }}
-    >
-      {/* Search bar */}
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-background/80 px-4 sm:px-6 backdrop-blur-xl">
+      {/* Left: mobile menu + search */}
       <div className="flex items-center gap-3 flex-1 max-w-md">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-9 w-9 rounded-xl lg:hidden shrink-0"
+          onClick={toggleSidebar}
+        >
+          <Menu size={18} className="text-muted-foreground" />
+        </Button>
         <div className="relative w-full">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -57,13 +62,11 @@ export function TopNavbar() {
 
       {/* Right section */}
       <div className="flex items-center gap-2">
-        {/* Notifications */}
         <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-xl">
           <Bell size={18} className="text-muted-foreground" />
           <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-destructive ring-2 ring-background" />
         </Button>
 
-        {/* Theme toggle */}
         <Button
           variant="ghost"
           size="icon"
@@ -77,7 +80,6 @@ export function TopNavbar() {
           )}
         </Button>
 
-        {/* Profile dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="flex items-center gap-2 rounded-xl px-2 h-9">
