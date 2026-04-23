@@ -6,7 +6,13 @@ export type PageId =
   | "api-keys"
   | "analytics"
   | "billing"
-  | "settings";
+  | "settings"
+  | "overview"
+  | "my-api-keys"
+  | "usage-history"
+  | "all-users"
+  | "all-apis"
+  | "system-stats";
 
 interface AppState {
   currentPage: PageId;

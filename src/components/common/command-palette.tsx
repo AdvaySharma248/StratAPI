@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import {
   LayoutDashboard,
   Globe,
@@ -9,31 +9,58 @@ import {
   CreditCard,
   Settings,
   Search,
+  Eye,
+  History,
+  Users,
+  Server,
+  Activity,
 } from "lucide-react";
 import { useAppStore, type PageId } from "@/lib/store";
+import { useAuth, type UserRole, rolePages } from "@/lib/auth";
 
-const pages: { id: PageId; label: string; icon: React.ReactNode; keywords: string[] }[] = [
-  { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard size={18} />, keywords: ["home", "overview", "stats"] },
-  { id: "apis", label: "APIs", icon: <Globe size={18} />, keywords: ["api", "management", "endpoints"] },
-  { id: "api-keys", label: "API Keys", icon: <Key size={18} />, keywords: ["keys", "tokens", "credentials", "secret"] },
-  { id: "analytics", label: "Analytics", icon: <BarChart3 size={18} />, keywords: ["charts", "metrics", "performance", "monitoring"] },
-  { id: "billing", label: "Billing", icon: <CreditCard size={18} />, keywords: ["payments", "invoices", "plans", "pricing", "subscription"] },
-  { id: "settings", label: "Settings", icon: <Settings size={18} />, keywords: ["config", "preferences", "profile"] },
+const allPageItems: { id: PageId; label: string; icon: React.ReactNode; keywords: string[]; role: UserRole }[] = [
+  // Owner
+  { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard size={18} />, keywords: ["home", "overview", "stats"], role: "owner" },
+  { id: "apis", label: "APIs", icon: <Globe size={18} />, keywords: ["api", "management", "endpoints"], role: "owner" },
+  { id: "api-keys", label: "API Keys", icon: <Key size={18} />, keywords: ["keys", "tokens", "credentials"], role: "owner" },
+  { id: "analytics", label: "Analytics", icon: <BarChart3 size={18} />, keywords: ["charts", "metrics", "performance"], role: "owner" },
+  { id: "billing", label: "Billing", icon: <CreditCard size={18} />, keywords: ["payments", "invoices", "plans"], role: "owner" },
+  { id: "settings", label: "Settings", icon: <Settings size={18} />, keywords: ["config", "preferences", "profile"], role: "owner" },
+  // Consumer
+  { id: "overview", label: "Overview", icon: <Eye size={18} />, keywords: ["home", "dashboard", "summary"], role: "consumer" },
+  { id: "my-api-keys", label: "My API Keys", icon: <Key size={18} />, keywords: ["keys", "tokens", "assigned"], role: "consumer" },
+  { id: "usage-history", label: "Usage History", icon: <History size={18} />, keywords: ["logs", "activity", "requests"], role: "consumer" },
+  // Admin
+  { id: "all-users", label: "All Users", icon: <Users size={18} />, keywords: ["users", "accounts", "people"], role: "admin" },
+  { id: "all-apis", label: "All APIs", icon: <Server size={18} />, keywords: ["api", "services", "endpoints"], role: "admin" },
+  { id: "system-stats", label: "System Stats", icon: <Activity size={18} />, keywords: ["health", "monitoring", "metrics", "performance"], role: "admin" },
 ];
 
 export function CommandPalette() {
   const { commandOpen, setCommandOpen, setCurrentPage } = useAppStore();
+  const { user } = useAuth();
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const filtered = query
-    ? pages.filter(
-        (p) =>
-          p.label.toLowerCase().includes(query.toLowerCase()) ||
-          p.keywords.some((k) => k.includes(query.toLowerCase()))
-      )
-    : pages;
+  const role = user?.role ?? "owner";
+
+  const roleItems = useMemo(
+    () => allPageItems.filter((p) => p.role === role),
+    [role]
+  );
+
+  const filtered = useMemo(
+    () =>
+      query
+        ? roleItems.filter(
+            (p) =>
+              p.label.toLowerCase().includes(query.toLowerCase()) ||
+              p.keywords.some((k) => k.includes(query.toLowerCase()))
+          )
+        : roleItems,
+    [query, roleItems]
+  );
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {

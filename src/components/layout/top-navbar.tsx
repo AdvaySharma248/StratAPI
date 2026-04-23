@@ -2,10 +2,13 @@
 
 import { useEffect, useCallback } from "react";
 import { useTheme } from "next-themes";
-import { Search, Bell, Moon, Sun, Command, Menu } from "lucide-react";
+import { Search, Bell, Moon, Sun, Command, Menu, LogOut } from "lucide-react";
 import { useAppStore } from "@/lib/store";
+import { useAuth, roleConfig } from "@/lib/auth";
+import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -17,7 +20,8 @@ import {
 
 export function TopNavbar() {
   const { theme, setTheme } = useTheme();
-  const { setCommandOpen, toggleSidebar, sidebarCollapsed } = useAppStore();
+  const { setCommandOpen, toggleSidebar } = useAppStore();
+  const { user, logout } = useAuth();
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -33,6 +37,15 @@ export function TopNavbar() {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [handleKeyDown]);
+
+  const initials = user?.name
+    ?.split(" ")
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase() ?? "JD";
+
+  const cfg = user ? roleConfig[user.role] : null;
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-background/80 px-4 sm:px-6 backdrop-blur-xl">
@@ -62,6 +75,20 @@ export function TopNavbar() {
 
       {/* Right section */}
       <div className="flex items-center gap-2">
+        {/* Role badge */}
+        {cfg && (
+          <Badge
+            variant="outline"
+            className={cn(
+              "hidden sm:inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-semibold border tracking-wider",
+              cfg.bgColor,
+              cfg.color
+            )}
+          >
+            {cfg.label}
+          </Badge>
+        )}
+
         <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-xl">
           <Bell size={18} className="text-muted-foreground" />
           <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-destructive ring-2 ring-background" />
@@ -85,17 +112,20 @@ export function TopNavbar() {
             <Button variant="ghost" className="flex items-center gap-2 rounded-xl px-2 h-9">
               <Avatar className="h-7 w-7">
                 <AvatarFallback className="gradient-primary text-[10px] text-white font-semibold">
-                  JD
+                  {initials}
                 </AvatarFallback>
               </Avatar>
-              <span className="hidden sm:block text-sm font-medium">John</span>
+              <span className="hidden sm:block text-sm font-medium">{user?.name ?? "User"}</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48 rounded-xl">
             <DropdownMenuItem className="rounded-lg cursor-pointer">Profile</DropdownMenuItem>
             <DropdownMenuItem className="rounded-lg cursor-pointer">Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="rounded-lg cursor-pointer text-destructive">Logout</DropdownMenuItem>
+            <DropdownMenuItem className="rounded-lg cursor-pointer text-destructive" onClick={logout}>
+              <LogOut size={14} className="mr-2" />
+              Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

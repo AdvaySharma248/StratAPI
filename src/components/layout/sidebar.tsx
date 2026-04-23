@@ -10,14 +10,23 @@ import {
   ChevronLeft,
   ChevronRight,
   Zap,
+  Eye,
+  History,
+  Users,
+  Server,
+  Activity,
 } from "lucide-react";
 import { useAppStore, type PageId } from "@/lib/store";
+import { useAuth, type UserRole } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
 import { useEffect, useState } from "react";
 
-const navItems: { id: PageId; label: string; icon: React.ReactNode }[] = [
+type NavItem = { id: PageId; label: string; icon: React.ReactNode };
+
+const ownerNav: NavItem[] = [
   { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard size={20} /> },
   { id: "apis", label: "APIs", icon: <Globe size={20} /> },
   { id: "api-keys", label: "API Keys", icon: <Key size={20} /> },
@@ -26,25 +35,51 @@ const navItems: { id: PageId; label: string; icon: React.ReactNode }[] = [
   { id: "settings", label: "Settings", icon: <Settings size={20} /> },
 ];
 
+const consumerNav: NavItem[] = [
+  { id: "overview", label: "Overview", icon: <Eye size={20} /> },
+  { id: "my-api-keys", label: "My API Keys", icon: <Key size={20} /> },
+  { id: "usage-history", label: "Usage History", icon: <History size={20} /> },
+];
+
+const adminNav: NavItem[] = [
+  { id: "all-users", label: "All Users", icon: <Users size={20} /> },
+  { id: "all-apis", label: "All APIs", icon: <Server size={20} /> },
+  { id: "system-stats", label: "System Stats", icon: <Activity size={20} /> },
+];
+
+const navByRole: Record<UserRole, NavItem[]> = {
+  owner: ownerNav,
+  consumer: consumerNav,
+  admin: adminNav,
+};
+
 export function Sidebar() {
   const { currentPage, sidebarCollapsed, setCurrentPage, toggleSidebar } = useAppStore();
+  const { user } = useAuth();
   const [mounted, setMounted] = useState(false);
+
+  const role = user?.role ?? "owner";
+  const navItems = navByRole[role];
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setMounted(true));
     return () => cancelAnimationFrame(id);
   }, []);
 
+  const initials = user?.name
+    ?.split(" ")
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase() ?? "JD";
+
   return (
     <aside
       className={cn(
         "fixed left-0 top-0 z-40 flex h-screen flex-col border-r border-sidebar-border bg-sidebar",
         "transition-[width] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
-        // Desktop: always show. Mobile: hidden by default, shown via drawer pattern
         sidebarCollapsed ? "w-[72px]" : "w-[260px]",
-        // On mobile, hide sidebar entirely
         "max-lg:-translate-x-full max-lg:w-[260px]",
-        // When mounted + not collapsed on desktop, or when we want to show mobile drawer
         mounted && !sidebarCollapsed && "max-lg:translate-x-0"
       )}
     >
@@ -118,13 +153,13 @@ export function Sidebar() {
         )}>
           <Avatar className="h-8 w-8 shrink-0">
             <AvatarFallback className="gradient-primary text-xs text-white font-semibold">
-              JD
+              {initials}
             </AvatarFallback>
           </Avatar>
           {!sidebarCollapsed && (
-            <div className="flex flex-col overflow-hidden">
-              <span className="truncate text-sm font-medium">John Doe</span>
-              <span className="truncate text-xs text-sidebar-foreground/60">john@meterflow.io</span>
+            <div className="flex flex-col overflow-hidden min-w-0">
+              <span className="truncate text-sm font-medium">{user?.name ?? "User"}</span>
+              <span className="truncate text-xs text-sidebar-foreground/60">{user?.email ?? ""}</span>
             </div>
           )}
         </div>
