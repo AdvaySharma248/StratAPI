@@ -1,7 +1,7 @@
 "use client";
 
-import { useAuth, useAppStore, roleDefaultPage } from "@/lib/auth";
-import { AuthProvider, type UserRole } from "@/lib/auth";
+import { useAppStore, type PageId } from "@/lib/store";
+import { useAuth, AuthProvider, type UserRole, roleDefaultPage } from "@/lib/auth";
 import { LoginPage } from "@/components/auth/login-page";
 import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { CommandPalette } from "@/components/common/command-palette";
