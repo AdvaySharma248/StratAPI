@@ -31,24 +31,18 @@ export function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      {/* Background decoration */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden">
-        <div className="absolute -left-40 -top-40 h-[500px] w-[500px] rounded-full bg-primary/5 blur-3xl" />
-        <div className="absolute -bottom-40 -right-40 h-[500px] w-[500px] rounded-full bg-chart-3/5 blur-3xl" />
-      </div>
-
       <div className="relative w-full max-w-md">
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl gradient-primary">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary">
             <Zap size={24} className="text-white" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight gradient-text">MeterFlow</h1>
+          <h1 className="text-2xl font-bold tracking-tight">MeterFlow</h1>
           <p className="text-sm text-muted-foreground">Usage-Based API Billing Platform</p>
         </div>
 
         {/* Login card */}
-        <div className="rounded-2xl border border-border bg-card p-6 shadow-lg">
+        <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium">Email</Label>
@@ -58,7 +52,7 @@ export function LoginPage() {
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                className="h-10 rounded-xl"
+                className="h-10 rounded-lg"
               />
               {error && <p className="text-xs text-destructive">{error}</p>}
             </div>
@@ -75,10 +69,10 @@ export function LoginPage() {
                       type="button"
                       onClick={() => setSelectedRole(opt.role)}
                       className={cn(
-                        "flex flex-col items-center gap-2 rounded-xl border p-3 transition-all duration-200",
+                        "flex flex-col items-center gap-2 rounded-lg border p-3 transition-colors",
                         isSelected
-                          ? "border-primary bg-primary/5 shadow-sm"
-                          : "border-border hover:border-primary/30 hover:bg-muted/50"
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:border-primary/30 hover:bg-muted"
                       )}
                     >
                       <div className={cn(
@@ -99,7 +93,7 @@ export function LoginPage() {
               </div>
             </div>
 
-            <Button type="submit" className="gradient-primary text-white w-full rounded-xl h-10 glow-shadow-sm hover:opacity-90 transition-opacity">
+            <Button type="submit" className="bg-primary hover:bg-primary text-white w-full rounded-lg h-10 transition-colors">
               Sign In
               <ArrowRight size={16} className="ml-2" />
             </Button>

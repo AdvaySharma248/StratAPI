@@ -59,7 +59,7 @@ export function SettingsPage() {
         <p className="text-muted-foreground mt-1">Configure your account and API preferences</p>
       </div>
 
-      <div className="rounded-2xl border border-border bg-card">
+      <div className="rounded-xl border border-border bg-card">
         <Tabs defaultValue="profile" className="w-full">
           <div className="border-b border-border px-6">
             <TabsList className="h-14 w-full justify-start rounded-none bg-transparent p-0 gap-1">
@@ -277,7 +277,7 @@ export function SettingsPage() {
           <Button
             onClick={handleSave}
             disabled={saving}
-            className="gradient-primary text-white rounded-xl min-w-[120px]"
+            className="bg-primary text-white rounded-xl min-w-[120px]"
           >
             {saving ? (
               <>

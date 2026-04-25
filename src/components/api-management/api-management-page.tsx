@@ -52,7 +52,7 @@ export function APIManagementPage() {
           <h1 className="text-2xl font-semibold tracking-tight">APIs</h1>
           <p className="text-muted-foreground mt-1">Monitor and manage your API services</p>
         </div>
-        <Button className="gradient-primary text-white rounded-xl glow-shadow-sm hover:opacity-90 transition-opacity">
+        <Button className="bg-primary text-white rounded-xl hover:bg-primary/90 transition-opacity">
           <Plus size={16} className="mr-2" />
           Create API
         </Button>
@@ -62,7 +62,7 @@ export function APIManagementPage() {
         {apiList.map((api) => (
           <div
             key={api.id}
-            className="group rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+            className="group rounded-xl border border-border bg-card p-5 transition-all duration-300"
           >
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
@@ -79,8 +79,8 @@ export function APIManagementPage() {
                 className={cn(
                   "rounded-full px-2 py-0.5 text-[10px] font-medium border-0 uppercase tracking-wider",
                   api.status === "healthy"
-                    ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                    : "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                    ? "bg-emerald-500/10 text-emerald-600"
+                    : "bg-amber-500/10 text-amber-600"
                 )}
               >
                 {api.status}

@@ -12,7 +12,7 @@ export function AdminAllApisPage() {
         <p className="text-muted-foreground mt-1">Platform-wide API registry</p>
       </div>
 
-      <div className="rounded-2xl border border-border bg-card overflow-hidden">
+      <div className="rounded-xl border border-border bg-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -45,8 +45,8 @@ export function AdminAllApisPage() {
                       className={cn(
                         "rounded-full px-2 py-0.5 text-[10px] font-medium border-0 uppercase tracking-wider",
                         api.status === "healthy"
-                          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                          : "bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                          ? "bg-emerald-500/10 text-emerald-600"
+                          : "bg-amber-500/10 text-amber-600"
                       )}
                     >
                       {api.status}

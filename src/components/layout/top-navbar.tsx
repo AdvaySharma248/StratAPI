@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useCallback } from "react";
-import { useTheme } from "next-themes";
-import { Search, Bell, Moon, Sun, Command, Menu, LogOut } from "lucide-react";
+import { Search, Bell, Command, Menu, LogOut } from "lucide-react";
 import { useAppStore } from "@/lib/store";
 import { useAuth, roleConfig } from "@/lib/auth";
 import { cn } from "@/lib/utils";
@@ -19,7 +18,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export function TopNavbar() {
-  const { theme, setTheme } = useTheme();
   const { setCommandOpen, toggleSidebar } = useAppStore();
   const { user, logout } = useAuth();
 
@@ -48,13 +46,12 @@ export function TopNavbar() {
   const cfg = user ? roleConfig[user.role] : null;
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-background/80 px-4 sm:px-6 backdrop-blur-xl">
-      {/* Left: mobile menu + search */}
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-border bg-background px-4 sm:px-6">
       <div className="flex items-center gap-3 flex-1 max-w-md">
         <Button
           variant="ghost"
           size="icon"
-          className="h-9 w-9 rounded-xl lg:hidden shrink-0"
+          className="h-9 w-9 rounded-lg lg:hidden shrink-0"
           onClick={toggleSidebar}
         >
           <Menu size={18} className="text-muted-foreground" />
@@ -63,7 +60,7 @@ export function TopNavbar() {
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder="Search anything..."
-            className="h-9 pl-9 rounded-xl bg-muted/50 border-transparent focus:border-border focus:bg-background transition-colors text-sm"
+            className="h-9 pl-9 rounded-lg bg-muted border-transparent focus:border-border focus:bg-background transition-colors text-sm"
             readOnly
             onClick={() => setCommandOpen(true)}
           />
@@ -73,9 +70,7 @@ export function TopNavbar() {
         </div>
       </div>
 
-      {/* Right section */}
       <div className="flex items-center gap-2">
-        {/* Role badge */}
         {cfg && (
           <Badge
             variant="outline"
@@ -89,36 +84,23 @@ export function TopNavbar() {
           </Badge>
         )}
 
-        <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-xl">
+        <Button variant="ghost" size="icon" className="relative h-9 w-9 rounded-lg">
           <Bell size={18} className="text-muted-foreground" />
           <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-destructive ring-2 ring-background" />
         </Button>
 
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-9 w-9 rounded-xl"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        >
-          {theme === "dark" ? (
-            <Sun size={18} className="text-muted-foreground" />
-          ) : (
-            <Moon size={18} className="text-muted-foreground" />
-          )}
-        </Button>
-
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="flex items-center gap-2 rounded-xl px-2 h-9">
+            <Button variant="ghost" className="flex items-center gap-2 rounded-lg px-2 h-9">
               <Avatar className="h-7 w-7">
-                <AvatarFallback className="gradient-primary text-[10px] text-white font-semibold">
+                <AvatarFallback className="bg-primary text-[10px] text-white font-semibold">
                   {initials}
                 </AvatarFallback>
               </Avatar>
               <span className="hidden sm:block text-sm font-medium">{user?.name ?? "User"}</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 rounded-xl">
+          <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuItem className="rounded-lg cursor-pointer">Profile</DropdownMenuItem>
             <DropdownMenuItem className="rounded-lg cursor-pointer">Settings</DropdownMenuItem>
             <DropdownMenuSeparator />

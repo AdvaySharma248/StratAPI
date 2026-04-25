@@ -34,7 +34,7 @@ export function ConsumerApiKeysPage() {
         <p className="text-muted-foreground mt-1">API keys assigned to your account</p>
       </div>
 
-      <div className="rounded-2xl border border-border bg-card overflow-hidden">
+      <div className="rounded-xl border border-border bg-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -69,7 +69,7 @@ export function ConsumerApiKeysPage() {
                     <span className="text-sm font-mono">{item.usage.toLocaleString()}</span>
                   </td>
                   <td className="px-6 py-4">
-                    <Badge variant="secondary" className="rounded-full px-2.5 py-0.5 text-xs font-medium border-0 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                    <Badge variant="secondary" className="rounded-full px-2.5 py-0.5 text-xs font-medium border-0 bg-emerald-500/10 text-emerald-600">
                       Active
                     </Badge>
                   </td>

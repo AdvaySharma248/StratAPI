@@ -116,7 +116,7 @@ export function CommandPalette() {
         onClick={() => setCommandOpen(false)}
       />
       <div className="fixed left-1/2 top-[20%] z-50 w-full max-w-lg -translate-x-1/2 animate-in fade-in zoom-in-95 slide-in-from-top-4 duration-200">
-        <div className="rounded-2xl border border-border bg-card shadow-2xl overflow-hidden">
+        <div className="rounded-xl border border-border bg-card shadow-2xl overflow-hidden">
           <div className="flex items-center border-b border-border px-4">
             <Search size={16} className="shrink-0 text-muted-foreground" />
             <input

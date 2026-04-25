@@ -21,7 +21,6 @@ import { useAuth, type UserRole } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Badge } from "@/components/ui/badge";
 import { useEffect, useState } from "react";
 
 type NavItem = { id: PageId; label: string; icon: React.ReactNode };
@@ -83,7 +82,6 @@ export function Sidebar() {
         mounted && !sidebarCollapsed && "max-lg:translate-x-0"
       )}
     >
-      {/* Mobile overlay */}
       {mounted && !sidebarCollapsed && (
         <div
           className="fixed inset-0 z-[-1] bg-black/50 lg:hidden"
@@ -93,7 +91,7 @@ export function Sidebar() {
 
       {/* Logo */}
       <div className="flex h-16 items-center gap-3 px-4 overflow-hidden">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl gradient-primary">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary">
           <Zap size={20} className="text-white" />
         </div>
         {!sidebarCollapsed && (
@@ -112,20 +110,15 @@ export function Sidebar() {
               key={item.id}
               onClick={() => setCurrentPage(item.id)}
               className={cn(
-                "relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                 isActive
-                  ? "text-primary-foreground"
-                  : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                  ? "bg-primary/10 text-primary"
+                  : "text-sidebar-foreground hover:bg-muted hover:text-foreground",
                 sidebarCollapsed && "justify-center px-2"
               )}
             >
-              {isActive && (
-                <div className="absolute inset-0 rounded-xl gradient-primary" />
-              )}
-              <span className="relative z-10 flex items-center gap-3">
-                {item.icon}
-                {!sidebarCollapsed && <span className="whitespace-nowrap">{item.label}</span>}
-              </span>
+              {item.icon}
+              {!sidebarCollapsed && <span className="whitespace-nowrap">{item.label}</span>}
             </button>
           );
 
@@ -148,25 +141,25 @@ export function Sidebar() {
       {/* Bottom section */}
       <div className="border-t border-sidebar-border p-3">
         <div className={cn(
-          "flex items-center gap-3 rounded-xl px-2 py-2 overflow-hidden",
+          "flex items-center gap-3 rounded-lg px-2 py-2 overflow-hidden",
           sidebarCollapsed && "justify-center px-0"
         )}>
           <Avatar className="h-8 w-8 shrink-0">
-            <AvatarFallback className="gradient-primary text-xs text-white font-semibold">
+            <AvatarFallback className="bg-primary text-xs text-white font-semibold">
               {initials}
             </AvatarFallback>
           </Avatar>
           {!sidebarCollapsed && (
             <div className="flex flex-col overflow-hidden min-w-0">
               <span className="truncate text-sm font-medium">{user?.name ?? "User"}</span>
-              <span className="truncate text-xs text-sidebar-foreground/60">{user?.email ?? ""}</span>
+              <span className="truncate text-xs text-muted-foreground">{user?.email ?? ""}</span>
             </div>
           )}
         </div>
 
         <button
           onClick={toggleSidebar}
-          className="mt-2 hidden lg:flex w-full items-center justify-center gap-2 rounded-xl py-2 text-sidebar-foreground/60 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+          className="mt-2 hidden lg:flex w-full items-center justify-center gap-2 rounded-lg py-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           {sidebarCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
           {!sidebarCollapsed && <span className="text-xs">Collapse</span>}

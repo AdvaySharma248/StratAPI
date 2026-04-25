@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export function ActivityTable() {
   return (
-    <div className="rounded-2xl border border-border bg-card">
+    <div className="rounded-xl border border-border bg-card">
       <div className="p-6 pb-4">
         <h3 className="text-base font-semibold">Recent API Activity</h3>
         <p className="text-sm text-muted-foreground mt-0.5">Latest API requests across all services</p>
@@ -17,10 +17,7 @@ export function ActivityTable() {
           <thead>
             <tr className="border-t border-border">
               {["API Name", "Endpoint", "Status", "Latency", "Timestamp"].map((h) => (
-                <th
-                  key={h}
-                  className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground"
-                >
+                <th key={h} className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-muted-foreground">
                   {h}
                 </th>
               ))}
@@ -28,15 +25,12 @@ export function ActivityTable() {
           </thead>
           <tbody>
             {recentActivity.map((item) => (
-              <tr
-                key={item.id}
-                className="border-t border-border/50 transition-colors hover:bg-muted/30"
-              >
+              <tr key={item.id} className="border-t border-border/50 transition-colors hover:bg-muted/50">
                 <td className="px-6 py-3.5">
                   <span className="text-sm font-medium">{item.apiName}</span>
                 </td>
                 <td className="px-6 py-3.5">
-                  <code className="rounded-lg bg-muted px-2 py-0.5 text-xs font-mono text-muted-foreground">
+                  <code className="rounded-md bg-muted px-2 py-0.5 text-xs font-mono text-muted-foreground">
                     {item.endpoint}
                   </code>
                 </td>
@@ -46,8 +40,8 @@ export function ActivityTable() {
                     className={cn(
                       "rounded-full px-2.5 py-0.5 text-xs font-medium border-0",
                       item.status === "success"
-                        ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                        : "bg-red-500/10 text-red-600 dark:text-red-400"
+                        ? "bg-green-50 text-green-600"
+                        : "bg-red-50 text-red-600"
                     )}
                   >
                     {item.status === "success" ? "Success" : "Error"}

@@ -77,14 +77,14 @@ export function APIKeysPage() {
           <h1 className="text-2xl font-semibold tracking-tight">API Keys</h1>
           <p className="text-muted-foreground mt-1">Manage your API keys and access credentials</p>
         </div>
-        <Button onClick={() => setShowDialog(true)} className="gradient-primary text-white rounded-xl glow-shadow-sm hover:opacity-90 transition-opacity">
+        <Button onClick={() => setShowDialog(true)} className="bg-primary text-white rounded-xl hover:bg-primary/90 transition-opacity">
           <Plus size={16} className="mr-2" />
           Generate API Key
         </Button>
       </div>
 
       {/* Keys table */}
-      <div className="rounded-2xl border border-border bg-card overflow-hidden">
+      <div className="rounded-xl border border-border bg-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -151,8 +151,8 @@ export function APIKeysPage() {
                       className={cn(
                         "rounded-full px-2.5 py-0.5 text-xs font-medium border-0",
                         item.status === "active"
-                          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                          : "bg-red-500/10 text-red-600 dark:text-red-400"
+                          ? "bg-emerald-500/10 text-emerald-600"
+                          : "bg-red-500/10 text-red-600"
                       )}
                     >
                       {item.status === "active" ? "Active" : "Revoked"}
@@ -198,7 +198,7 @@ export function APIKeysPage() {
             className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
             onClick={() => setShowDialog(false)}
           />
-          <div className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-border bg-card p-6 shadow-2xl">
+          <div className="fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-xl border border-border bg-card p-6 shadow-2xl">
             <h2 className="text-lg font-semibold">Generate New API Key</h2>
             <p className="mt-1 text-sm text-muted-foreground">
               A new API key will be created with full access to your APIs.
@@ -214,7 +214,7 @@ export function APIKeysPage() {
               </Button>
               <Button
                 onClick={generateKey}
-                className="gradient-primary text-white rounded-xl"
+                className="bg-primary text-white rounded-xl"
               >
                 Generate Key
               </Button>

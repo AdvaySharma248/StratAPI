@@ -5,7 +5,7 @@ export const kpiData = [
     change: 12.5,
     trend: "up" as const,
     icon: "Activity",
-    gradient: "gradient-primary",
+    gradient: "bg-primary/10 text-primary",
   },
   {
     title: "Active API Keys",
@@ -13,7 +13,7 @@ export const kpiData = [
     change: 5.2,
     trend: "up" as const,
     icon: "Key",
-    gradient: "gradient-cyan",
+    gradient: "bg-blue-500/10 text-blue-600",
   },
   {
     title: "Error Rate",
@@ -21,7 +21,7 @@ export const kpiData = [
     change: 2.1,
     trend: "down" as const,
     icon: "AlertTriangle",
-    gradient: "gradient-warm",
+    gradient: "bg-amber-500/10 text-amber-600",
     suffix: "%",
   },
   {
@@ -30,7 +30,7 @@ export const kpiData = [
     change: 8.3,
     trend: "up" as const,
     icon: "DollarSign",
-    gradient: "gradient-success",
+    gradient: "bg-green-500/10 text-green-600",
     prefix: "$",
   },
 ];

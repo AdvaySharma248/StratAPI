@@ -28,7 +28,7 @@ export function ConsumerOverviewPage() {
         {consumerKpi.map((kpi) => (
           <div
             key={kpi.title}
-            className="rounded-2xl border border-border bg-card p-5 transition-shadow duration-300 hover:shadow-lg"
+            className="rounded-xl border border-border bg-card p-5 transition-shadow duration-300"
           >
             <p className="text-sm text-muted-foreground">{kpi.title}</p>
             <div className="mt-1 text-2xl font-semibold tracking-tight">
@@ -39,7 +39,7 @@ export function ConsumerOverviewPage() {
       </div>
 
       {/* Assigned API Keys */}
-      <div className="rounded-2xl border border-border bg-card p-6">
+      <div className="rounded-xl border border-border bg-card p-6">
         <h3 className="text-base font-semibold">Assigned API Keys</h3>
         <p className="text-sm text-muted-foreground mt-0.5 mb-4">Keys available for your use</p>
         <div className="space-y-3">
@@ -51,7 +51,7 @@ export function ConsumerOverviewPage() {
                 </code>
                 <span className="text-sm font-medium">{key.name}</span>
               </div>
-              <Badge variant="secondary" className="rounded-full px-2.5 py-0.5 text-xs font-medium border-0 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+              <Badge variant="secondary" className="rounded-full px-2.5 py-0.5 text-xs font-medium border-0 bg-emerald-500/10 text-emerald-600">
                 Active
               </Badge>
             </div>

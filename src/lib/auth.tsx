@@ -20,21 +20,18 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-// Role display config
 export const roleConfig: Record<UserRole, { label: string; color: string; bgColor: string }> = {
-  owner: { label: "OWNER", color: "text-violet-600 dark:text-violet-400", bgColor: "bg-violet-500/10 border-violet-500/20" },
-  consumer: { label: "CONSUMER", color: "text-cyan-600 dark:text-cyan-400", bgColor: "bg-cyan-500/10 border-cyan-500/20" },
-  admin: { label: "ADMIN", color: "text-amber-600 dark:text-amber-400", bgColor: "bg-amber-500/10 border-amber-500/20" },
+  owner: { label: "OWNER", color: "text-red-600", bgColor: "bg-red-50 border-red-200" },
+  consumer: { label: "CONSUMER", color: "text-blue-600", bgColor: "bg-blue-50 border-blue-200" },
+  admin: { label: "ADMIN", color: "text-amber-600", bgColor: "bg-amber-50 border-amber-200" },
 };
 
-// Pages allowed per role
 export const rolePages: Record<UserRole, string[]> = {
   owner: ["dashboard", "apis", "api-keys", "analytics", "billing", "settings"],
   consumer: ["overview", "my-api-keys", "usage-history"],
   admin: ["all-users", "all-apis", "system-stats"],
 };
 
-// Default landing page per role
 export const roleDefaultPage: Record<UserRole, string> = {
   owner: "dashboard",
   consumer: "overview",
@@ -55,12 +52,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({
-      user,
-      isAuthenticated: user !== null,
-      login,
-      logout,
-    }),
+    () => ({ user, isAuthenticated: user !== null, login, logout }),
     [user, login, logout]
   );
 

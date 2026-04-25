@@ -17,9 +17,9 @@ const allUsers = [
 ];
 
 const roleBadge: Record<string, string> = {
-  owner: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
-  consumer: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
-  admin: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  owner: "bg-red-500/10 text-red-600",
+  consumer: "bg-blue-500/10 text-blue-600",
+  admin: "bg-amber-500/10 text-amber-600",
 };
 
 export function AdminAllUsersPage() {
@@ -43,7 +43,7 @@ export function AdminAllUsersPage() {
           { label: "Owners", value: owners, icon: <Shield size={18} /> },
           { label: "Consumers", value: consumers, icon: <Globe size={18} /> },
         ].map((s) => (
-          <div key={s.label} className="rounded-2xl border border-border bg-card p-4">
+          <div key={s.label} className="rounded-xl border border-border bg-card p-4">
             <div className="flex items-center gap-2 text-muted-foreground mb-2">
               {s.icon}
               <span className="text-xs font-medium">{s.label}</span>
@@ -54,7 +54,7 @@ export function AdminAllUsersPage() {
       </div>
 
       {/* Users table */}
-      <div className="rounded-2xl border border-border bg-card overflow-hidden">
+      <div className="rounded-xl border border-border bg-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -87,8 +87,8 @@ export function AdminAllUsersPage() {
                     <Badge variant="secondary" className={cn(
                       "rounded-full px-2.5 py-0.5 text-xs font-medium border-0",
                       u.status === "active"
-                        ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                        : "bg-red-500/10 text-red-600 dark:text-red-400"
+                        ? "bg-emerald-500/10 text-emerald-600"
+                        : "bg-red-500/10 text-red-600"
                     )}>
                       {u.status === "active" ? "Active" : "Inactive"}
                     </Badge>

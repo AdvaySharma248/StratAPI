@@ -15,7 +15,7 @@ export function ConsumerUsageHistoryPage() {
         <p className="text-muted-foreground mt-1">Your recent API request activity</p>
       </div>
 
-      <div className="rounded-2xl border border-border bg-card overflow-hidden">
+      <div className="rounded-xl border border-border bg-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -44,8 +44,8 @@ export function ConsumerUsageHistoryPage() {
                       className={cn(
                         "rounded-full px-2.5 py-0.5 text-xs font-medium border-0",
                         item.status === "success"
-                          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                          : "bg-red-500/10 text-red-600 dark:text-red-400"
+                          ? "bg-emerald-500/10 text-emerald-600"
+                          : "bg-red-500/10 text-red-600"
                       )}
                     >
                       {item.status === "success" ? "Success" : "Error"}

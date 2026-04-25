@@ -18,7 +18,7 @@ export function BillingPage() {
       </div>
 
       {/* Current Plan */}
-      <div className="relative overflow-hidden rounded-2xl border-2 border-primary/30 bg-card p-6">
+      <div className="relative overflow-hidden rounded-xl border-2 border-primary/30 bg-card p-6">
         <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-primary/5 blur-3xl" />
         <div className="relative">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -39,7 +39,7 @@ export function BillingPage() {
                 {billingData.currentPlan.requests} API requests per month
               </p>
             </div>
-            <Button className="gradient-primary text-white rounded-xl glow-shadow-sm hover:opacity-90 transition-opacity shrink-0">
+            <Button className="bg-primary text-white rounded-xl hover:bg-primary/90 transition-opacity shrink-0">
               <Rocket size={16} className="mr-2" />
               Upgrade Plan
             </Button>
@@ -59,7 +59,7 @@ export function BillingPage() {
       {/* Usage + Plans grid */}
       <div className="grid gap-4 lg:grid-cols-2">
         {/* Usage summary */}
-        <div className="rounded-2xl border border-border bg-card p-6">
+        <div className="rounded-xl border border-border bg-card p-6">
           <h3 className="text-base font-semibold">Usage This Month</h3>
           <p className="text-sm text-muted-foreground mt-0.5">API request consumption</p>
 
@@ -90,7 +90,7 @@ export function BillingPage() {
         </div>
 
         {/* All plans */}
-        <div className="rounded-2xl border border-border bg-card p-6">
+        <div className="rounded-xl border border-border bg-card p-6">
           <h3 className="text-base font-semibold">Available Plans</h3>
           <p className="text-sm text-muted-foreground mt-0.5">Choose the plan that fits your needs</p>
 
@@ -108,7 +108,7 @@ export function BillingPage() {
                 <div className="flex items-center gap-3">
                   <div className={cn(
                     "flex h-10 w-10 items-center justify-center rounded-xl",
-                    plan.current ? "gradient-primary" : "bg-muted"
+                    plan.current ? "bg-primary text-white" : "bg-muted"
                   )}>
                     <Zap size={18} className={plan.current ? "text-white" : "text-muted-foreground"} />
                   </div>
@@ -141,7 +141,7 @@ export function BillingPage() {
       </div>
 
       {/* Invoices */}
-      <div className="rounded-2xl border border-border bg-card">
+      <div className="rounded-xl border border-border bg-card">
         <div className="p-6 pb-4">
           <h3 className="text-base font-semibold">Invoices</h3>
           <p className="text-sm text-muted-foreground mt-0.5">Your billing history</p>
@@ -178,7 +178,7 @@ export function BillingPage() {
                   <td className="px-6 py-3.5">
                     <Badge
                       variant="secondary"
-                      className="rounded-full px-2.5 py-0.5 text-xs font-medium border-0 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                      className="rounded-full px-2.5 py-0.5 text-xs font-medium border-0 bg-emerald-500/10 text-emerald-600"
                     >
                       {inv.status.charAt(0).toUpperCase() + inv.status.slice(1)}
                     </Badge>

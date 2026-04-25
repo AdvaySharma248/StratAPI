@@ -13,12 +13,12 @@ export function AdminSystemStatsPage() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {[
-          { label: "Total Users", value: 4821, gradient: "gradient-primary" },
-          { label: "Total APIs", value: 156, gradient: "gradient-cyan" },
-          { label: "Total Requests (24h)", value: 2847532, gradient: "gradient-success" },
-          { label: "Avg Uptime", value: 99.96, suffix: "%", gradient: "gradient-warm" },
+          { label: "Total Users", value: 4821, gradient: "bg-primary text-white" },
+          { label: "Total APIs", value: 156, gradient: "bg-blue-500 text-white" },
+          { label: "Total Requests (24h)", value: 2847532, gradient: "bg-green-500 text-white" },
+          { label: "Avg Uptime", value: 99.96, suffix: "%", gradient: "bg-amber-500 text-white" },
         ].map((stat) => (
-          <div key={stat.label} className="rounded-2xl border border-border bg-card p-5 transition-shadow duration-300 hover:shadow-lg">
+          <div key={stat.label} className="rounded-xl border border-border bg-card p-5 transition-shadow duration-300">
             <p className="text-sm text-muted-foreground">{stat.label}</p>
             <div className="mt-1 text-2xl font-semibold tracking-tight">
               <AnimatedCounter
@@ -33,7 +33,7 @@ export function AdminSystemStatsPage() {
 
       {/* Health indicators */}
       <div className="grid gap-4 lg:grid-cols-2">
-        <div className="rounded-2xl border border-border bg-card p-6">
+        <div className="rounded-xl border border-border bg-card p-6">
           <h3 className="text-base font-semibold">System Health</h3>
           <p className="text-sm text-muted-foreground mt-0.5 mb-4">Core service status</p>
           <div className="space-y-3">
@@ -49,7 +49,7 @@ export function AdminSystemStatsPage() {
                 <span className="text-sm font-medium">{svc.name}</span>
                 <div className="flex items-center gap-2">
                   <div className={svc.ok ? "h-2 w-2 rounded-full bg-emerald-500" : "h-2 w-2 rounded-full bg-amber-500 animate-pulse"} />
-                  <span className={svc.ok ? "text-xs text-emerald-600 dark:text-emerald-400" : "text-xs text-amber-600 dark:text-amber-400"}>
+                  <span className={svc.ok ? "text-xs text-emerald-600" : "text-xs text-amber-600"}>
                     {svc.status}
                   </span>
                 </div>
@@ -58,7 +58,7 @@ export function AdminSystemStatsPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card p-6">
+        <div className="rounded-xl border border-border bg-card p-6">
           <h3 className="text-base font-semibold">Resource Usage</h3>
           <p className="text-sm text-muted-foreground mt-0.5 mb-4">Current infrastructure metrics</p>
           <div className="space-y-4">
