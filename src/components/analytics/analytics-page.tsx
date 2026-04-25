@@ -41,7 +41,7 @@ export function AnalyticsPage() {
   const textColor = isDark ? "#64748B" : "#94A3B8";
 
   const tooltipStyle = {
-    backgroundColor: isDark ? "#1E293B" : "#FFFFFF",
+    backgroundColor: isDark ? "#2b0000" : "#FFFFFF",
     border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#E2E8F0"}`,
     borderRadius: "12px",
     boxShadow: isDark ? "0 4px 20px rgba(0,0,0,0.4)" : "0 4px 20px rgba(0,0,0,0.08)",

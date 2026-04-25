@@ -78,7 +78,7 @@ export function RequestsChart() {
           />
           <RechartsTooltip
             contentStyle={{
-              backgroundColor: isDark ? "#1E293B" : "#FFFFFF",
+              backgroundColor: isDark ? "#2b0000" : "#FFFFFF",
               border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "#E2E8F0"}`,
               borderRadius: "12px",
               boxShadow: isDark
