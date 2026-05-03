@@ -54,7 +54,11 @@ const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
   const formattedErrors = parsed.error.issues.map((issue) => `${issue.path.join(".")}: ${issue.message}`);
-  throw new Error(`Invalid backend environment configuration:\n${formattedErrors.join("\n")}`);
+  console.error("\n====================== FATAL ENVIRONMENT ERROR ======================");
+  console.error("Render is crashing because you are missing these Environment Variables:");
+  console.error(formattedErrors.join("\n"));
+  console.error("=====================================================================\n");
+  process.exit(1);
 }
 
 module.exports = parsed.data;
