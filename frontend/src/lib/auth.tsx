@@ -142,6 +142,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         details.email,
         details.password
       );
+      
+      // Send the verification email using Firebase
+      const { sendEmailVerification } = await import("firebase/auth");
+      await sendEmailVerification(fbCredential.user).catch((err) => {
+        console.warn("Failed to send verification email:", err);
+      });
+
       const idToken = await fbCredential.user.getIdToken();
 
       // 2. Create the StratAPI account (SQLite + MongoDB) and get a session
