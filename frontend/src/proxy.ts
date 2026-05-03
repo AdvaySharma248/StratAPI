@@ -19,7 +19,7 @@ const consumerOnlyPages = new Set(rolePages.consumer);
 // Pages that require owner role
 const ownerOnlyPages = new Set(rolePages.owner);
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Only protect /api/admin/* routes in middleware.
