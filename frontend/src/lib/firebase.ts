@@ -2,18 +2,31 @@
 // This file is safe to import on the client — only public keys are used here.
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getAnalytics, isSupported } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBHQMgDtV-JlRfBNgiwpcplMaOLL1IoRP8",
-  authDomain: "stratapi-77837.firebaseapp.com",
-  projectId: "stratapi-77837",
-  storageBucket: "stratapi-77837.firebasestorage.app",
-  messagingSenderId: "479960904781",
-  appId: "1:479960904781:web:eaa0811bda5d8627351804",
-  measurementId: "G-VC63LB4XBD",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 // Prevent re-initializing the app on hot reload in dev
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 export const firebaseAuth = getAuth(app);
+
+// Initialize Analytics only on the client side
+let analytics: import("firebase/analytics").Analytics | null = null;
+if (typeof window !== "undefined") {
+  isSupported().then((supported) => {
+    if (supported) {
+      analytics = getAnalytics(app);
+    }
+  });
+}
+
+export { analytics };
 export default app;

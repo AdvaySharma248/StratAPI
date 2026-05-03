@@ -43,7 +43,7 @@ const envSchema = z.object({
   FREE_TIER_REQUESTS: z.coerce.number().int().nonnegative().default(1000),
   PRICE_PER_100_REQUESTS_INR: z.coerce.number().nonnegative().default(0.5),
   BILLING_JOB_INTERVAL_MS: z.coerce.number().int().positive().default(3600000),
-  API_KEY_PREFIX: z.string().default("mf_live"),
+  API_KEY_PREFIX: z.string().default("sa_live"),
   RAZORPAY_KEY_ID: z.string().optional(),
   RAZORPAY_KEY_SECRET: z.string().optional(),
   RAZORPAY_CURRENCY: z.string().default("INR"),

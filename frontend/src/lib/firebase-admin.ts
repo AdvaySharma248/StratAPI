@@ -20,7 +20,7 @@ async function getAdminAuth() {
     // Full service account — best for production
     const admin = await import("firebase-admin");
     if (!admin.apps.length) {
-      const serviceAccount = JSON.parse(serviceAccountJson) as admin.ServiceAccount;
+      const serviceAccount = JSON.parse(serviceAccountJson) as import("firebase-admin").ServiceAccount;
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
         projectId: "stratapi-77837",

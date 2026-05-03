@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
   // Tell Turbopack/Next.js not to bundle Prisma's native SQLite binaries.
   // Without this, API routes importing Prisma silently return 404 in dev.
   serverExternalPackages: ["@prisma/client", "prisma", "firebase-admin"],
+  // Enable standalone output for Docker / Railway / Render deployments
+  output: "standalone",
 };
 
 export default nextConfig;
