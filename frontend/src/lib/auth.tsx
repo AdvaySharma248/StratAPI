@@ -102,6 +102,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         credentials.email,
         credentials.password
       );
+
+      // Block login if email is not verified
+      if (!fbCredential.user.emailVerified) {
+        await firebaseSignOut(firebaseAuth).catch(() => {});
+        throw new Error("Please verify your email address before logging in. Check your inbox for the verification link.");
+      }
+
       const idToken = await fbCredential.user.getIdToken();
 
       // 2. Exchange Firebase ID token for a StratAPI session cookie
@@ -151,7 +158,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const idToken = await fbCredential.user.getIdToken();
 
-      // 2. Create the StratAPI account (SQLite + MongoDB) and get a session
+      // 2. Create the StratAPI account (SQLite + MongoDB) without logging them in yet
       const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -160,15 +167,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       if (!response.ok) {
-        // Roll back the Firebase account so the user can retry cleanly
         await fbCredential.user.delete().catch(() => {});
         throw new Error(await readJsonError(response));
       }
 
-      const data = (await response.json()) as { user: User };
-      setUser(data.user);
-      syncDefaultPage(data.user);
-      return data.user;
+      // 3. Log them out of Firebase immediately so they can't access the dashboard
+      await firebaseSignOut(firebaseAuth).catch(() => {});
+
+      // 4. Force them to verify their email
+      throw new Error("Registration successful! Please check your email to verify your account before logging in.");
     },
     [syncDefaultPage]
   );
