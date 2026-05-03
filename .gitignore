@@ -14,11 +14,14 @@ node_modules
 /coverage
 
 # next.js
-/.next/
-/out/
+.next/
+frontend/.next/
+out/
+frontend/out/
 
 # production
-/build
+build
+frontend/build
 
 # misc
 .DS_Store
@@ -40,6 +43,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+frontend/next-env.d.ts
 local-*
 .claude
 .z-ai-config
